@@ -628,7 +628,7 @@
         </button>
 
         <div class="user-points-pill">
-            <span>💎 النقط:</span>
+            <span> النقط:</span>
             <b id="points-val">0</b>
         </div>
 
@@ -645,15 +645,15 @@
                 <button class="close-btn" onclick="toggleDrawer()">&times;</button>
             </div>
             <ul class="drawer-menu">
-                <li class="drawer-item active-item" onclick="switchView('home'); toggleDrawer();">🏠 الرئيسية</li>
-                <li class="drawer-item" onclick="switchView('orders'); toggleDrawer();" style="color: var(--secondary);">📦 الطلبيات (تتبع الشحن)</li>
-                <li class="drawer-item" onclick="switchView('convert'); toggleDrawer();" style="color: var(--primary);">💎 تحويل النقاط (صرف الجواهر)</li>
+                <li class="drawer-item active-item" onclick="switchView('home'); toggleDrawer();"> الرئيسية</li>
+                <li class="drawer-item" onclick="switchView('orders'); toggleDrawer();" style="color: var(--secondary);"> الطلبيات (تتبع الشحن)</li>
+                <li class="drawer-item" onclick="switchView('convert'); toggleDrawer();" style="color: var(--primary);"> تحويل النقاط (صرف الجواهر)</li>
                 <li class="drawer-item" onclick="switchView('tasks'); toggleDrawer();">
                     🎁 المهام والإحالة
                     <div class="drawer-dot" id="drawerTasksDot"></div>
                 </li>
-                <li class="drawer-item" onclick="switchView('dpi'); toggleDrawer();">🎯 إعدادات الهواتف (DPI)</li>
-                <li class="drawer-item" onclick="switchView('names'); toggleDrawer();">✨ زخرفة الأسماء</li>
+                <li class="drawer-item" onclick="switchView('dpi'); toggleDrawer();"> إعدادات الهواتف (DPI)</li>
+                <li class="drawer-item" onclick="switchView('names'); toggleDrawer();"> زخرفة الأسماء</li>
                 <li class="drawer-item" onclick="window.open('https://kick.com', '_blank')">  </li>
             </ul>
         </div>
@@ -757,11 +757,11 @@
                 
                 <select class="styled-select" id="deviceBrand">
                     <option value="samsung">Samsung</option>
-                    <option value="redmi">Xiaomi / Redmi / Realme</option>
+                    <option value="redmi">Xiaomi / Redmi </option>
                     <option value="infinix">Infinix / Tecno </option>
                     <option value="iphone">iPhone 
                     </option>
-                    <option value="oppo">Oppo </option>
+                    <option value="oppo">Oppo / Realme</option>
                 </select>
 
                 <button class="btn-action" onclick="showSettings()">إظهار الإعدادات</button>
@@ -1548,7 +1548,7 @@
         function confirmRedeem() {
             const playerId = document.getElementById('playerFfId').value.trim();
             if (!playerId || playerId.length < 6) {
-                alert("عافاك دخل آيدي فري فاير (ID) صحيح كيتكون من 6 أرقام على الأقل!");
+                alert(" دخل آيدي فري فاير (ID) صحيح كيتكون من 6 أرقام على الأقل!");
                 return;
             }
 
@@ -1687,7 +1687,7 @@
             const shareUrl = `${window.location.origin}${window.location.pathname}?ref=${refCode}`;
 
             // النص التسويقي الكامل الجاهز للتعليقات
-            const promotionalText = `← وأخيرا صحراوي أسطورة العالم أنشئ موقع لتوزيع الجوائز على المتابعين 💎🎁\nوفيه أيضا افضل إعدادات الهيدشوت المناسب لهاتفك 🎯\n🪄و زخرفة أسماء أسطورية ومقبولة في اللعبة\nو قسم شحن الجواهر والبويا باص عبر الـ ID عن طريق جمع النقط\n\n👇 ادخل الآن وجرب بنفسك:\n${shareUrl}`;
+            const promotionalText = ` وأخيرا صحراوي أسطورة العالم أنشئ موقع لتوزيع الجوائز على المتابعين 💎🎁\nوفيه أيضا افضل إعدادات الهيدشوت المناسب لهاتفك 🎯\n🪄و زخرفة أسماء أسطورية ومقبولة في اللعبة\nو قسم شحن الجواهر والبويا باص عبر الـ ID عن طريق جمع النقط\n\n👇 ادخل الآن وجرب بنفسك:\n${shareUrl}`;
 
             navigator.clipboard.writeText(promotionalText).then(() => {
                 alert("تم نسخ النص ورابطك بنجاح! 📋\nسيتم نقلك الآن إلى فيسبوك للصقه فوراً في التعليقات.");

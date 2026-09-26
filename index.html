@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SA7RAWI GAMING</title>
+    <!-- استدعاء خطوط عربية وأجنبية فخمة للألعاب والتطبيقات -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Russo+One&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDK (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --surface: #ffffff;
+            --primary: #ff5722;
+            --primary-soft: #fff1ed;
+            --secondary: #2563eb;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.05);
+            --green: #10b981;
+            --red: #ef4444;
+            --yellow: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-bottom: 85px;
+            overflow-x: hidden;
+        }
+
+        #siteNoticeBanner {
+            display: none;
+            padding: 10px 14px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .banner-container {
+            width: 100%;
+            height: 110px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 0px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .action-bar {
+            background: var(--surface);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            gap: 8px;
+        }
+
+        .menu-trigger {
+            background: var(--primary-soft);
+            color: var(--primary);
+            border: 1px solid #fed7aa;
+            border-radius: 10px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            flex-shrink: 0;
+            touch-action: manipulation;
+            position: relative;
+        }
+
+        .menu-trigger span {
+            display: block;
+            width: 20px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .user-points-pill {
+            background: #fef9c3;
+            border: 1px solid #fde047;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #854d0e;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(234, 179, 8, 0.15);
+        }
+
+        .account-btn {
+            background: var(--primary-soft);
+            color: var(--primary);
+            border: 1px solid #fed7aa;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            touch-action: manipulation;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s linear;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 275px;
+            height: 100%;
+            background: var(--surface);
+            z-index: 100;
+            transform: translate3d(100%, 0, 0);
+            transition: transform 0.25s ease-out;
+            will-change: transform;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .drawer.active {
+            transform: translate3d(0, 0, 0);
+        }
+
+        .drawer-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--primary-soft);
+        }
+
+        .drawer-header h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 900;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-sub);
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px 8px;
+        }
+
+        .drawer-menu {
+            list-style: none;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow-y: auto;
+        }
+
+        .drawer-item {
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .drawer-item:active, .drawer-item.active-item {
+            background: var(--primary-soft);
+            color: var(--primary);
+        }
+
+        .drawer-bottom-zone {
+            padding: 14px;
+            border-top: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .logout-btn-bottom {
+            width: 100%;
+            background: #fee2e2;
+            color: var(--red);
+            border: 1px solid #fecaca;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .page-view {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .page-view.active {
+            display: flex;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .card h2 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            font-weight: 900;
+            color: var(--text-main);
+        }
+
+        .card p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .styled-select, .styled-input {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: #fff;
+            color: var(--text-main);
+            outline: none;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .styled-select:focus, .styled-input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-action {
+            width: 100%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 87, 34, 0.25);
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        .btn-action:disabled {
+            background: #94a3b8 !important;
+            box-shadow: none !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+        }
+
+        .convert-card, .order-status-card {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .order-status-card {
+            margin-bottom: 10px;
+        }
+
+        .convert-info h4, .order-status-card h4 {
+            font-size: 0.98rem;
+            font-weight: 900;
+            color: var(--text-main);
+        }
+
+        .convert-info p, .order-status-card p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            font-weight: 700;
+        }
+
+        .btn-convert {
+            background: var(--primary-soft);
+            color: var(--primary);
+            border: 1.5px solid #fed7aa;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            touch-action: manipulation;
+        }
+
+        .badge-status {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .badge-pending { background: #fef3c7; color: #b45309; }
+        .badge-done { background: #dcfce7; color: #15803d; }
+        .badge-rejected { background: #fee2e2; color: #b91c1c; }
+
+        .post-footer-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+            gap: 8px;
+        }
+
+        .like-btn {
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            color: #e11d48;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .like-btn.liked {
+            background: #e11d48;
+            color: #fff;
+            border-color: #e11d48;
+        }
+
+        .task-action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn-task-step {
+            background: #f1f5f9;
+            color: var(--text-main);
+            border: 1.5px solid var(--border);
+            padding: 10px 8px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .btn-task-step.attached {
+            background: #dcfce7;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--red);
+            border-radius: 50%;
+            position: absolute;
+            top: 4px;
+            right: 28%;
+            box-shadow: 0 0 6px rgba(239, 68, 68, 0.8);
+            animation: pulseDot 1.4s infinite;
+            display: none;
+        }
+
+        .drawer-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--red);
+            border-radius: 50%;
+            margin-right: auto;
+            box-shadow: 0 0 6px rgba(239, 68, 68, 0.8);
+            animation: pulseDot 1.4s infinite;
+            display: none;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.6; }
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2.5px solid rgba(255, 255, 255, 0.4);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            z-index: 110;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            width: 100%;
+            max-width: 360px;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .auth-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .auth-tab-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 8px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: var(--text-sub);
+        }
+
+        .auth-tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 6px;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+            z-index: 50;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            color: var(--text-sub);
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 20%;
+            touch-action: manipulation;
+            position: relative;
+        }
+
+        .nav-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stat-badge {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-badge span {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            display: block;
+        }
+
+        .stat-badge b {
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="siteNoticeBanner"></div>
+
+    <div class="banner-container">
+        <img class="banner-img" src="https://i.postimg.cc/PqPgY99W/IMG-20260925-220829.jpg" alt="SA7RAWI GAMING">
+    </div>
+
+    <div class="action-bar">
+        <button class="menu-trigger" onclick="toggleDrawer()" aria-label="القائمة">
+            <span></span>
+            <span></span>
+            <span></span>
+            <div class="notification-dot" id="menuNotificationDot" style="top:-2px; right:-2px;"></div>
+        </button>
+
+        <div class="user-points-pill">
+            <span>💎 النقط:</span>
+            <b id="points-val">0</b>
+        </div>
+
+        <button class="account-btn" id="authBtn" onclick="openAuthModal()">
+            <span id="authBtnText">تسجيل الدخول</span>
+        </button>
+    </div>
+
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+    <aside class="drawer" id="sideDrawer">
+        <div>
+            <div class="drawer-header">
+                <h3>القائمة الرئيسية</h3>
+                <button class="close-btn" onclick="toggleDrawer()">&times;</button>
+            </div>
+            <ul class="drawer-menu">
+                <li class="drawer-item active-item" onclick="switchView('home'); toggleDrawer();">🏠 الرئيسية</li>
+                <li class="drawer-item" onclick="switchView('orders'); toggleDrawer();" style="color: var(--secondary);">📦 الطلبيات (تتبع الشحن)</li>
+                <li class="drawer-item" onclick="switchView('convert'); toggleDrawer();" style="color: var(--primary);">💎 تحويل النقاط (صرف الجواهر)</li>
+                <li class="drawer-item" onclick="switchView('tasks'); toggleDrawer();">
+                    🎁 المهام والإحالة
+                    <div class="drawer-dot" id="drawerTasksDot"></div>
+                </li>
+                <li class="drawer-item" onclick="switchView('dpi'); toggleDrawer();">🎯 إعدادات الهواتف (DPI)</li>
+                <li class="drawer-item" onclick="switchView('names'); toggleDrawer();">✨ زخرفة الأسماء</li>
+                <li class="drawer-item" onclick="window.open('https://kick.com', '_blank')">  </li>
+            </ul>
+        </div>
+        
+        <div class="drawer-bottom-zone">
+            <button class="logout-btn-bottom" id="drawerLogoutBtn" onclick="logoutUser()">
+                🚪 تسجيل الخروج من الحساب
+            </button>
+        </div>
+    </aside>
+
+    <main class="container">
+
+        <!-- واجهة 1: الرئيسية -->
+        <section id="view-home" class="page-view active">
+            <div id="homeCardsContainer" style="display:flex; flex-direction:column; gap:14px;"></div>
+        </section>
+
+        <!-- واجهة: الطلبيات -->
+        <section id="view-orders" class="page-view">
+            <div class="card" style="border-right: 4px solid var(--secondary);">
+                <h2>📦 سجل طلبيات الشحن</h2>
+                <p style="margin-bottom:0;">تتبع حالة شحن الجواهر الخاصة بك. إذا رُفض الطلب لأي سبب، يسترجع حسابك النقاط تلقائياً.</p>
+            </div>
+            <div id="userOrdersList">
+                <p style="text-align:center; color:var(--text-sub); font-size:0.85rem;">سجل الدخول لعرض طلبياتك.</p>
+            </div>
+        </section>
+
+        <!-- واجهة: تحويل النقاط إلى جواهر -->
+        <section id="view-convert" class="page-view">
+            <div class="card" style="background: linear-gradient(to left, #fff7ed, #ffffff); border-color: #fdba74;">
+                <h2>💱 قسم تحويل النقاط</h2>
+                <p style="margin-bottom:0;">اجمع النقط وحولهم مباشرة لجواهر عبر الـ ID.</p>
+            </div>
+
+            <div class="convert-card">
+                <div class="convert-info">
+                    <h4>💎 50 جوهرة فري فاير</h4>
+                    <p>المطلوب: <span style="color:var(--primary);">500 نقطة</span></p>
+                </div>
+                <button class="btn-convert" onclick="openRedeem(500, '50 جوهرة')">شحن</button>
+            </div>
+
+            <div class="convert-card">
+                <div class="convert-info">
+                    <h4>💎 100 جوهرة فري فاير</h4>
+                    <p>المطلوب: <span style="color:var(--primary);">1000 نقطة</span></p>
+                </div>
+                <button class="btn-convert" onclick="openRedeem(1000, '100 جوهرة')">تحويل</button>
+            </div>
+
+            <div class="convert-card">
+                <div class="convert-info">
+                    <h4>💎 200 جوهرة فري فاير</h4>
+                    <p>المطلوب: <span style="color:var(--primary);">1500 نقطة</span></p>
+                </div>
+                <button class="btn-convert" onclick="openRedeem(1500, '200 جوهرة')">شحن</button>
+            </div>
+
+            <div class="convert-card" style="border-color:#60a5fa;">
+                <div class="convert-info">
+                    <h4>🎫 تفعيل بويا باص</h4>
+                    <p>المطلوب: <span style="color:#2563eb;">3500 نقطة</span></p>
+                </div>
+                <button class="btn-convert" style="border-color:#93c5fd; color:#2563eb;" onclick="openRedeem(3500, 'بويا باص')">شحن</button>
+            </div>
+
+            <div class="convert-card" style="border-color:#f59e0b; background:#fffbeb;">
+                <div class="convert-info">
+                    <h4>👑 10,000 جوهرة</h4>
+                    <p>المطلوب: <span style="color:#b45309;">5000 نقطة</span></p>
+                </div>
+                <button class="btn-convert" style="background:#f59e0b; color:#fff; border:none;" onclick="openRedeem(5000, '10,000 جوهرة')">شحن</button>
+            </div>
+        </section>
+
+        <!-- واجهة: المهام والإحالة -->
+        <section id="view-tasks" class="page-view">
+            <div class="card">
+                <h2>⭐ جمع النقط عبر الإحالة</h2>
+                <p>انشر الرابط مع أصدقائك، وكل شخص جديد يدخل من رابطك تحصل على <span id="refPtsLabel">20</span> نقطة! (ممنوع الإحالة من نفس الجهاز).</p>
+                <input type="text" readonly class="styled-input" value="https://sa7rawi.shop/?ref=guest" id="shareInput">
+                <button class="btn-action" onclick="copyShare()">📋 نسخ المنشور والمشاركة الآن</button>
+            </div>
+            
+            <div class="card" id="dailyTaskCard" style="border-right: 4px solid var(--green);">
+                <h2>مهمة يومية سريعة (<span id="dailyPtsLabel">+100</span> نقطة)</h2>
+                <p id="dailyTaskDesc">سجل الحضور اليومي و اربح النقاط فوراً.</p>
+                <button class="btn-action" id="dailyBtnAction" style="background:var(--green);" onclick="addDailyPoints()">أخذ النقاط اليومية</button>
+            </div>
+
+            <div id="dynamicTasksContainer" style="display:flex; flex-direction:column; gap:12px;"></div>
+        </section>
+
+        <!-- واجهة: DPI -->
+        <section id="view-dpi" class="page-view">
+            <div class="card">
+                <h2>⚙️ كاشف حساسية الهيدشوت</h2>
+                <p>احتر نوع هاتفك      :</p>
+                
+                <select class="styled-select" id="deviceBrand">
+                    <option value="samsung">Samsung</option>
+                    <option value="redmi">Xiaomi / Redmi / Realme</option>
+                    <option value="infinix">Infinix / Tecno </option>
+                    <option value="iphone">iPhone 
+                    </option>
+                    <option value="oppo">Oppo </option>
+                </select>
+
+                <button class="btn-action" onclick="showSettings()">إظهار الإعدادات</button>
+
+                <div id="settingsBox" class="stats-grid" style="display: none; margin-top:10px;">
+                    <div class="stat-badge"><span>عام (General)</span><b id="valGen">98</b></div>
+                    <div class="stat-badge"><span>نقطة حمراء</span><b id="valRed">92</b></div>
+                    <div class="stat-badge"><span>عدسة 2X</span><b id="val2x">95</b></div>
+                    <div class="stat-badge"><span>أفضل DPI</span><b id="valDpi" style="color: #2563eb;">500</b></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- واجهة: زخرفة الأسماء المطورة -->
+        <section id="view-names" class="page-view">
+            <div class="card">
+                <h2>🪄 زخرفة أسماء فري فاير (عربي وإنجليزي)</h2>
+                <p>اكتب اسمك بالعربية أو الإنجليزية واضغط على زر الزخرفة للحصول على أسماء نادرة ومقبولة:</p>
+                <input type="text" id="rawName" class="styled-input" placeholder="اكتب اسمك هنا">
+                <button class="btn-action" onclick="renderNames()">زخرفة </button>
+                <div id="outputNames" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- نافذة إتمام المهمة وإرفاق الصورة -->
+    <div class="modal-overlay" id="taskVerifyModal">
+        <div class="modal-content">
+            <h3 style="font-size:1.1rem; color:var(--primary); margin-bottom:6px;" id="taskModalTitle">إتمام المهمة</h3>
+            <p style="font-size:0.8rem; color:var(--text-sub); margin-bottom:14px;" id="taskModalDesc">أكمل الخطوات وأرفق لقطة الشاشة للتأكيد:</p>
+            
+            <div class="task-action-grid">
+                <button class="btn-task-step" id="btnTaskVisit" onclick="openTaskUrl()">
+                    🔗 1. الذهاب للمهمة
+                </button>
+                <label class="btn-task-step" id="btnTaskAttachLabel" for="taskScreenshotInput">
+                    📷 2. إرفاق صورة
+                </label>
+                <input type="file" id="taskScreenshotInput" accept="image/*" style="display:none;" onchange="handleImageSelected(this)">
+            </div>
+
+            <p id="imageStatusText" style="font-size:0.75rem; color:var(--red); margin-bottom:10px; font-weight:bold;">
+                ⚠️ يجب إرفاق لقطة شاشة لتفعيل زر التأكيد
+            </p>
+
+            <div style="display:flex; gap:8px;">
+                <button class="btn-action" id="btnConfirmTaskSubmit" disabled style="background:#94a3b8; cursor:not-allowed;" onclick="submitTaskProof()">
+                    تأكيد وإرسال
+                </button>
+                <button class="btn-action" style="background:#e2e8f0; color:#334155;" onclick="closeTaskModal()">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تسجيل الدخول / إنشاء حساب -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content">
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">تسجيل الدخول</button>
+                <button class="auth-tab-btn" id="tabRegisterBtn" onclick="switchAuthTab('register')">إنشاء حساب جديد</button>
+            </div>
+
+            <p style="font-size:0.8rem; color:var(--text-sub); margin-bottom:12px;" id="authHintText">
+                دخل اسم المستخدم وكلمة المرور 
+            </p>
+
+            <input type="text" id="authUsername" class="styled-input" placeholder="اسم المستخدم :)">
+            <input type="password" id="authPassword" class="styled-input" placeholder="كلمة المرور">
+
+            <div style="display:flex; gap:8px; margin-top:8px;">
+                <button class="btn-action" id="authSubmitBtn" onclick="handleAuthSubmit()">دخول</button>
+                <button class="btn-action" style="background:#e2e8f0; color:#334155;" onclick="closeAuthModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تأكيد التحويل -->
+    <div class="modal-overlay" id="redeemModal">
+        <div class="modal-content">
+            <h3 style="font-size:1.1rem; color:var(--primary); margin-bottom:8px;" id="modalRewardTitle">شحن الجواهر</h3>
+            <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:14px;">أدخل ID :</p>
+            <input type="number" id="playerFfId" class="styled-input" placeholder=": " style="text-align:center;">
+            <div style="display:flex; gap:8px; margin-top:6px;">
+                <button class="btn-action" onclick="confirmRedeem()">تأكيد الشحن</button>
+                <button class="btn-action" style="background:#e2e8f0; color:#334155;" onclick="closeModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. الشريط السفلي الثابت -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active" id="tab-home" onclick="switchView('home')">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            الرئيسية
+        </button>
+        <button class="nav-btn" id="tab-convert" onclick="switchView('convert')">
+            <svg viewBox="0 0 24 24"><path d="M11.5 1L2 6v2h19V6m-5 4v7h3v-7m-5 0v7h3v-7m-5 0v7h3v-7m-6 0v7h3v-7M2 22h19v-3H2v3z"/></svg>
+            تحويل
+        </button>
+        <button class="nav-btn" id="tab-tasks" onclick="switchView('tasks')">
+            <div class="notification-dot" id="navNotificationDot"></div>
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+            المهام
+        </button>
+        <button class="nav-btn" id="tab-dpi" onclick="switchView('dpi')">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            الإعدادات
+        </button>
+        <button class="nav-btn" id="tab-names" onclick="switchView('names')">
+            <svg viewBox="0 0 24 24"><path d="M7.5 5.6L10 7 8.6 4.5 10 2 7.5 3.4 5 2l1.4 2.5L5 7zm12 9.8L17 14l1.4 2.5L17 19l2.5-1.4L22 19l-1.4-2.5L22 14zM22 2l-2.5 1.4L17 2l1.4 2.5L17 7l2.5-1.4L22 7l-1.4-2.5zm-7.63 5.29c-.39-.39-1.02-.39-1.41 0L1.29 18.96c-.39.39-.39 1.02 0 1.41l2.34 2.34c.39.39 1.02.39 1.41 0L16.7 11.05c.39-.39.39-1.02 0-1.41l-2.33-2.35zm-1.03 5.49l-2.12-2.12 2.44-2.44 2.12 2.12-2.44 2.44z"/></svg>
+            الزخرفة
+        </button>
+    </nav>
+
+    <script>
+        // ==========================================
+        // 1. رابط مجموعة فيسبوك المستهدفة للمشاركة
+        // ==========================================
+        const FACEBOOK_TARGET_URL = "https://www.facebook.com/groups/your_group_id_here/";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFLNyTaqCn2CmejAPvD4k0ZRn9FByuGMY",
+            authDomain: "sa7rawi-shop.firebaseapp.com",
+            databaseURL: "https://sa7rawi-shop-default-rtdb.firebaseio.com",
+            projectId: "sa7rawi-shop",
+            storageBucket: "sa7rawi-shop.firebasestorage.app",
+            messagingSenderId: "457434744986",
+            appId: "1:457434744986:web:a41f0ff64c6b9a70b37723",
+            measurementId: "G-MZ3G2V02SJ"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.database();
+
+        let currentUser = localStorage.getItem('sahrawi_current_user') || null;
+        let currentUserData = null;
+        let userTaskCompletions = {};
+        let cachedTasks = {};
+        let globalCfg = { welcomePts: 50, dailyPts: 100, refPts: 50 };
+        let authMode = 'login';
+        let isSubmittingProof = false;
+
+        function getDeviceFingerprint() {
+            let fp = localStorage.getItem('sahrawi_device_fingerprint');
+            if (!fp) {
+                fp = 'DEV_' + Math.random().toString(36).substring(2, 12) + '_' + Date.now();
+                localStorage.setItem('sahrawi_device_fingerprint', fp);
+            }
+            return fp;
+        }
+
+        function processReferralStrict() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refUser = urlParams.get('ref');
+            const myFingerprint = getDeviceFingerprint();
+
+            if (refUser && refUser !== 'guest') {
+                const deviceRef = db.ref('registered_devices/' + myFingerprint);
+                deviceRef.once('value').then(snap => {
+                    if (!snap.exists()) {
+                        deviceRef.set({
+                            registeredAt: Date.now(),
+                            referredBy: refUser
+                        }).then(() => {
+                            const targetUserRef = db.ref('users/' + refUser);
+                            targetUserRef.once('value').then(uSnap => {
+                                if (uSnap.exists()) {
+                                    const reward = globalCfg.refPts || 50;
+                                    targetUserRef.child('points').set(firebase.database.ServerValue.increment(reward));
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+        }
+
+        function listenToGlobalData() {
+            db.ref('settings').on('value', snap => {
+                if (snap.exists()) {
+                    globalCfg = snap.val();
+                    document.getElementById('refPtsLabel').innerText = globalCfg.refPts || 50;
+                    document.getElementById('dailyPtsLabel').innerText = `+${globalCfg.dailyPts || 100}`;
+                }
+            });
+
+            db.ref('banner').on('value', snap => {
+                const bEl = document.getElementById('siteNoticeBanner');
+                if (snap.exists() && snap.val().active) {
+                    const b = snap.val();
+                    bEl.style.display = 'block';
+                    bEl.style.backgroundColor = b.color || '#ff5722';
+                    bEl.innerText = b.text;
+                } else {
+                    bEl.style.display = 'none';
+                }
+            });
+
+            db.ref('homeCards').on('value', snap => {
+                const homeContainer = document.getElementById('homeCardsContainer');
+                homeContainer.innerHTML = "";
+                if (snap.exists()) {
+                    const cards = snap.val();
+                    Object.keys(cards).forEach((k, index) => {
+                        const card = cards[k];
+                        const cDiv = document.createElement('div');
+                        cDiv.className = "card";
+                        if (index === 0) cDiv.style.borderRight = "4px solid var(--primary)";
+
+                        const likesCount = card.likes ? Object.keys(card.likes).length : 0;
+                        const isLiked = (currentUser && card.likes && card.likes[currentUser]) ? 'liked' : '';
+                        const targetDestination = card.targetView || (index === 0 ? 'convert' : 'tasks');
+
+                        const hasActionBtn = card.btn && card.btn.trim() !== "";
+                        const actionBtnHtml = hasActionBtn 
+                            ? `<button class="btn-action" style="flex:1; ${index !== 0 ? 'background:#2563eb;' : ''}" onclick="switchView('${targetDestination}')">${card.btn}</button>` 
+                            : '';
+
+                        const likeBtnHtml = card.hasLike !== false ? `
+                            <button class="like-btn ${isLiked}" onclick="togglePostLike('${k}')">
+                                ❤️ <span>${likesCount}</span>
+                            </button>
+                        ` : '';
+
+                        let footerHtml = '';
+                        if (hasActionBtn || card.hasLike !== false) {
+                            footerHtml = `
+                                <div class="post-footer-actions">
+                                    ${actionBtnHtml}
+                                    ${likeBtnHtml}
+                                </div>
+                            `;
+                        }
+
+                        cDiv.innerHTML = `
+                            <h2>${card.title}</h2>
+                            <p>${card.desc}</p>
+                            ${footerHtml}
+                        `;
+                        homeContainer.appendChild(cDiv);
+                    });
+                } else {
+                    homeContainer.innerHTML = `
+                        <div class="card" style="border-right: 4px solid var(--primary);">
+                            <h2>مرحباً بيك فالصحراوي غيمينغ! 👋</h2>
+                            <p>أحسن إعدادات وزخرفة الأسماء وقسم تحويل النقط لجواهر حقيقية عبر الآيدي.</p>
+                            <button class="btn-action" onclick="switchView('convert')">اصرف الجواهر  💎</button>
+                        </div>
+                    `;
+                }
+            });
+
+            db.ref('tasks').on('value', snap => {
+                cachedTasks = snap.val() || {};
+                checkNewTasksNotification();
+                renderDynamicTasks(cachedTasks);
+            });
+        }
+
+        function checkNewTasksNotification() {
+            const seenTasks = JSON.parse(localStorage.getItem('sahrawi_seen_tasks') || '[]');
+            const taskKeys = Object.keys(cachedTasks);
+            const hasUnseen = taskKeys.some(id => !seenTasks.includes(id));
+
+            const navDot = document.getElementById('navNotificationDot');
+            const drawerDot = document.getElementById('drawerTasksDot');
+            const menuDot = document.getElementById('menuNotificationDot');
+
+            if (hasUnseen && taskKeys.length > 0) {
+                navDot.style.display = 'block';
+                drawerDot.style.display = 'block';
+                menuDot.style.display = 'block';
+            } else {
+                navDot.style.display = 'none';
+                drawerDot.style.display = 'none';
+                menuDot.style.display = 'none';
+            }
+        }
+
+        function markTasksAsSeen() {
+            const taskKeys = Object.keys(cachedTasks);
+            localStorage.setItem('sahrawi_seen_tasks', JSON.stringify(taskKeys));
+            document.getElementById('navNotificationDot').style.display = 'none';
+            document.getElementById('drawerTasksDot').style.display = 'none';
+            document.getElementById('menuNotificationDot').style.display = 'none';
+        }
+
+        function togglePostLike(cardKey) {
+            if (!currentUser) {
+                alert("سجل الدخول أولاً للإعجاب بالمنشورات!");
+                openAuthModal();
+                return;
+            }
+
+            const likeRef = db.ref('homeCards/' + cardKey + '/likes/' + currentUser);
+            likeRef.once('value').then(snap => {
+                if (snap.exists()) {
+                    likeRef.remove();
+                } else {
+                    likeRef.set(true);
+                }
+            });
+        }
+
+        function renderDynamicTasks(tasks) {
+            const container = document.getElementById('dynamicTasksContainer');
+            container.innerHTML = "";
+            const now = Date.now();
+
+            const availableTasks = [];
+            const completedTasks = [];
+
+            Object.keys(tasks).forEach(taskId => {
+                const task = tasks[taskId];
+                const completionTime = userTaskCompletions[taskId] || 0;
+                const intervalHours = task.intervalHours !== undefined ? parseInt(task.intervalHours) : 24;
+
+                let isLocked = false;
+                let lockMsg = "";
+
+                if (completionTime > 0) {
+                    if (intervalHours === 0) {
+                        isLocked = true;
+                        lockMsg = "تم إكمال المهمة نهائياً ✅";
+                    } else {
+                        const cooldownMs = intervalHours * 60 * 60 * 1000;
+                        const elapsed = now - completionTime;
+                        if (elapsed < cooldownMs) {
+                            isLocked = true;
+                            const remainingMs = cooldownMs - elapsed;
+                            const hoursLeft = Math.floor(remainingMs / (1000 * 60 * 60));
+                            const minsLeft = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+                            lockMsg = `مكتملة! متوفرة بعد ${hoursLeft} س و ${minsLeft} د ⏳`;
+                        }
+                    }
+                }
+
+                const taskItem = {
+                    id: taskId,
+                    data: task,
+                    isLocked: isLocked,
+                    lockMsg: lockMsg,
+                    intervalHours: intervalHours
+                };
+
+                if (isLocked) {
+                    completedTasks.push(taskItem);
+                } else {
+                    availableTasks.push(taskItem);
+                }
+            });
+
+            const sortedTasks = [...availableTasks, ...completedTasks];
+
+            sortedTasks.forEach(item => {
+                const tDiv = document.createElement('div');
+                tDiv.className = "card";
+                if (item.isLocked) {
+                    tDiv.style.opacity = "0.78";
+                    tDiv.style.border = "1px dashed var(--border)";
+                }
+
+                const buttonHtml = item.isLocked ? `
+                    <button class="btn-action" disabled style="background:#94a3b8; cursor:not-allowed;">
+                        ${item.lockMsg}
+                    </button>
+                ` : `
+                    <button class="btn-action" onclick="openTaskModal('${item.id}', '${item.data.title}', '${item.data.desc}', '${item.data.url || ''}', ${item.data.points}, ${item.intervalHours})">
+                        إتمام المهمة وإرسال الإثبات
+                    </button>
+                `;
+
+                tDiv.innerHTML = `
+                    <h2>${item.data.title} (+${item.data.points} نقطة)</h2>
+                    <p>${item.data.desc}</p>
+                    ${buttonHtml}
+                `;
+                container.appendChild(tDiv);
+            });
+        }
+
+        function listenToCurrentUser() {
+            if (!currentUser) {
+                updateUIForGuest();
+                return;
+            }
+
+            db.ref('users/' + currentUser).on('value', snap => {
+                if (snap.exists()) {
+                    currentUserData = snap.val();
+                    if (currentUserData.banned) {
+                        alert("هذا الحساب محظور من طرف الإدارة!");
+                        logoutUser();
+                        return;
+                    }
+                    document.getElementById('authBtnText').innerText = `👤 ${currentUser}`;
+                    document.getElementById('points-val').innerText = currentUserData.points || 0;
+                    document.getElementById('drawerLogoutBtn').style.display = 'flex';
+                    document.getElementById('shareInput').value = `${window.location.origin}${window.location.pathname}?ref=${currentUser}`;
+                    checkDailyTaskStatus();
+                } else {
+                    logoutUser();
+                }
+            });
+
+            db.ref('user_task_completions/' + currentUser).on('value', snap => {
+                userTaskCompletions = snap.val() || {};
+                renderDynamicTasks(cachedTasks);
+            });
+
+            db.ref('orders').orderByChild('username').equalTo(currentUser).on('value', snap => {
+                const list = document.getElementById('userOrdersList');
+                list.innerHTML = "";
+                if (!snap.exists()) {
+                    list.innerHTML = "<p style='text-align:center; color:var(--text-sub); font-size:0.85rem;'>ليس لديك أي طلبيات شحن حالياً.</p>";
+                    return;
+                }
+
+                const orders = snap.val();
+                Object.keys(orders).reverse().forEach(orderId => {
+                    const ord = orders[orderId];
+
+                    if (ord.status === 'rejected' && !ord.refunded) {
+                        db.ref('users/' + currentUser + '/points').set(firebase.database.ServerValue.increment(ord.cost || 0));
+                        db.ref('orders/' + orderId + '/refunded').set(true);
+                        alert(`تنبيه: تم رفض طلبك (${ord.reward}) وتم استرجاع ${ord.cost} نقطة إلى رصيدك!`);
+                    }
+
+                    let statusBadge = '';
+                    if (ord.status === 'pending') {
+                        statusBadge = '<span class="badge-status badge-pending">قيد الانتظار ⏳</span>';
+                    } else if (ord.status === 'done') {
+                        statusBadge = '<span class="badge-status badge-done">تم الشحن بنجاح ✅</span>';
+                    } else if (ord.status === 'rejected') {
+                        statusBadge = '<span class="badge-status badge-rejected">تم رفض الشحن (رُدّت النقط) ❌</span>';
+                    }
+
+                    const card = document.createElement('div');
+                    card.className = 'order-status-card';
+                    card.innerHTML = `
+                        <div>
+                            <h4>${ord.reward} (ID: ${ord.playerId})</h4>
+                            <p>التاريخ: ${ord.time}</p>
+                        </div>
+                        <div>${statusBadge}</div>
+                    `;
+                    list.appendChild(card);
+                });
+            });
+        }
+
+        function updateUIForGuest() {
+            document.getElementById('authBtnText').innerText = "تسجيل الدخول";
+            document.getElementById('points-val').innerText = 0;
+            document.getElementById('drawerLogoutBtn').style.display = 'none';
+            document.getElementById('shareInput').value = `${window.location.origin}${window.location.pathname}?ref=guest`;
+            document.getElementById('userOrdersList').innerHTML = "<p style='text-align:center; color:var(--text-sub); font-size:0.85rem;'>سجل الدخول لعرض طلبياتك.</p>";
+            userTaskCompletions = {};
+            checkDailyTaskStatus();
+            renderDynamicTasks(cachedTasks);
+        }
+
+        let currentTaskContext = null;
+        let selectedProofBase64 = null;
+
+        function openTaskModal(id, title, desc, url, points, intervalHours) {
+            if (!currentUser) {
+                alert("يجب عليك تسجيل الدخول أولاً لإتمام المهام!");
+                openAuthModal();
+                return;
+            }
+
+            if (currentUser) {
+                db.ref('tasks/' + id + '/views/' + currentUser).set(true);
+            }
+
+            currentTaskContext = { id, title, desc, url, points, intervalHours };
+            selectedProofBase64 = null;
+            isSubmittingProof = false;
+
+            document.getElementById('taskModalTitle').innerText = title;
+            document.getElementById('taskModalDesc').innerText = desc;
+            document.getElementById('imageStatusText').innerText = "⚠️ يجب إرفاق لقطة شاشة لتفعيل زر التأكيد";
+            document.getElementById('imageStatusText').style.color = "var(--red)";
+            document.getElementById('btnTaskAttachLabel').classList.remove('attached');
+            document.getElementById('btnTaskAttachLabel').innerText = "📷 2. إرفاق صورة";
+            
+            const confirmBtn = document.getElementById('btnConfirmTaskSubmit');
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = "تأكيد وإرسال";
+            confirmBtn.style.background = "#94a3b8";
+            confirmBtn.style.cursor = "not-allowed";
+            document.getElementById('taskScreenshotInput').value = "";
+
+            document.getElementById('taskVerifyModal').classList.add('active');
+        }
+
+        function closeTaskModal() {
+            if (isSubmittingProof) return;
+            document.getElementById('taskVerifyModal').classList.remove('active');
+        }
+
+        function openTaskUrl() {
+            if (currentTaskContext && currentTaskContext.url) {
+                window.open(currentTaskContext.url, '_blank');
+            } else {
+                alert("قم بتنفيذ المهمة المطلوبة ثم أرفق لقطة الشاشة كدليل.");
+            }
+        }
+
+        function handleImageSelected(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const maxDimension = 900;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height && width > maxDimension) {
+                            height *= maxDimension / width;
+                            width = maxDimension;
+                        } else if (height > maxDimension) {
+                            width *= maxDimension / height;
+                            height = maxDimension;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        selectedProofBase64 = canvas.toDataURL('image/jpeg', 0.65);
+
+                        document.getElementById('btnTaskAttachLabel').classList.add('attached');
+                        document.getElementById('btnTaskAttachLabel').innerText = "✅ تم اختيار الصورة";
+                        document.getElementById('imageStatusText').innerText = "جاهز للإرسال للمراجعة";
+                        document.getElementById('imageStatusText').style.color = "var(--green)";
+                        
+                        const confirmBtn = document.getElementById('btnConfirmTaskSubmit');
+                        confirmBtn.disabled = false;
+                        confirmBtn.style.background = "var(--primary)";
+                        confirmBtn.style.cursor = "pointer";
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function submitTaskProof() {
+            if (isSubmittingProof) return;
+
+            if (!selectedProofBase64) {
+                alert("عافاك أرفق الصورة ديال السكرين شوت أولاً!");
+                return;
+            }
+
+            isSubmittingProof = true;
+            const confirmBtn = document.getElementById('btnConfirmTaskSubmit');
+            confirmBtn.disabled = true;
+            confirmBtn.innerHTML = `<span class="spinner"></span> جاري الرفع...`;
+
+            const now = Date.now();
+            const proofData = {
+                username: currentUser,
+                taskId: currentTaskContext.id,
+                taskTitle: currentTaskContext.title,
+                points: currentTaskContext.points,
+                proofImage: selectedProofBase64,
+                status: 'pending',
+                submittedAt: now,
+                timeString: new Date().toLocaleString('ar-MA')
+            };
+
+            db.ref('taskProofs').push(proofData).then(() => {
+                db.ref('user_task_completions/' + currentUser + '/' + currentTaskContext.id).set(now).then(() => {
+                    isSubmittingProof = false;
+                    closeTaskModal();
+                    alert("تم إرسال إثبات المهمة بنجاح! تم قفل المهمة ونقلها إلى الأسفل.");
+                });
+            }).catch(() => {
+                isSubmittingProof = false;
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = "تأكيد وإرسال";
+                alert("وقع خطأ فـ الاتصال! عاود حاول مرة ثانية.");
+            });
+        }
+
+        function openAuthModal() {
+            if (currentUser) {
+                if (confirm(`أنت مسجل باسم (${currentUser}). واش باغي تسجل الخروج؟`)) {
+                    logoutUser();
+                }
+                return;
+            }
+            document.getElementById('authModal').classList.add('active');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+            document.getElementById('authUsername').value = "";
+            document.getElementById('authPassword').value = "";
+        }
+
+        function switchAuthTab(mode) {
+            authMode = mode;
+            document.getElementById('tabLoginBtn').classList.toggle('active', mode === 'login');
+            document.getElementById('tabRegisterBtn').classList.toggle('active', mode === 'register');
+            document.getElementById('authSubmitBtn').innerText = mode === 'login' ? "تسجيل الدخول" : "إنشاء حساب";
+            document.getElementById('authHintText').innerText = mode === 'login' ? "دخل اسم المستخدم وكلمة المرور ديالك" : "اختار اسم مستخدم فريد وماتنساش كلمة المرور";
+        }
+
+        function handleAuthSubmit() {
+            const username = document.getElementById('authUsername').value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+            const password = document.getElementById('authPassword').value.trim();
+
+            if (!username || !password) {
+                alert("عافاك دخل اسم المستخدم وكلمة المرور!");
+                return;
+            }
+
+            if (username.length < 3) {
+                alert("اسم المستخدم خاصو يكون فيه 3 حروف أو أرقام على الأقل!");
+                return;
+            }
+
+            const userRef = db.ref('users/' + username);
+
+            if (authMode === 'register') {
+                userRef.once('value').then(snap => {
+                    if (snap.exists()) {
+                        alert(`عفواً! اسم المستخدم "${username}" مأخوذ من قبل! جرب تزيد رقم بحال "${username}1"`);
+                    } else {
+                        const welcomePts = globalCfg.welcomePts !== undefined ? globalCfg.welcomePts : 50;
+                        const newUserObj = {
+                            password: password,
+                            points: welcomePts,
+                            banned: false,
+                            lastDaily: 0,
+                            createdAt: Date.now()
+                        };
+                        userRef.set(newUserObj).then(() => {
+                            currentUser = username;
+                            localStorage.setItem('sahrawi_current_user', currentUser);
+                            alert(`مبروك! تم إنشاء حسابك بنجاح وحصلتي على ${welcomePts} نقطة ترحيبية 🎁`);
+                            closeAuthModal();
+                            listenToCurrentUser();
+                        });
+                    }
+                });
+            } else {
+                userRef.once('value').then(snap => {
+                    if (!snap.exists()) {
+                        alert("هاد اسم المستخدم ما كاينش! تأكد من الاسم أو ضغط على 'إنشاء حساب جديد'.");
+                        return;
+                    }
+                    const data = snap.val();
+                    if (data.banned) {
+                        alert("هذا الحساب محظور من طرف الإدارة!");
+                        return;
+                    }
+                    if (data.password !== password) {
+                        alert("كلمة المرور غير صحيحة! عاود تأكد منها.");
+                        return;
+                    }
+
+                    currentUser = username;
+                    localStorage.setItem('sahrawi_current_user', currentUser);
+                    alert(`مرحباً بك من جديد، ${username}!`);
+                    closeAuthModal();
+                    listenToCurrentUser();
+                });
+            }
+        }
+
+        function logoutUser() {
+            if (currentUser) {
+                db.ref('users/' + currentUser).off();
+                db.ref('orders').off();
+                db.ref('user_task_completions/' + currentUser).off();
+            }
+            currentUser = null;
+            currentUserData = null;
+            localStorage.removeItem('sahrawi_current_user');
+            updateUIForGuest();
+            toggleDrawer();
+            alert("تم تسجيل الخروج بنجاح.");
+        }
+
+        function checkDailyTaskStatus() {
+            const btn = document.getElementById('dailyBtnAction');
+            const desc = document.getElementById('dailyTaskDesc');
+
+            if (!currentUser || !currentUserData) {
+                btn.disabled = false;
+                btn.innerText = "أخذ النقاط اليومية";
+                btn.style.background = "var(--green)";
+                desc.innerText = "سجل الحضور اليومي ديالك وربح النقاط فوراً. المهمة متاحة مرة كل 24 ساعة.";
+                return;
+            }
+
+            const lastClaim = currentUserData.lastDaily || 0;
+            const now = Date.now();
+            const dayInMs = 24 * 60 * 60 * 1000;
+
+            if (now - lastClaim < dayInMs) {
+                const remainingMs = dayInMs - (now - lastClaim);
+                const hoursLeft = Math.floor(remainingMs / (1000 * 60 * 60));
+                const minsLeft = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+
+                btn.disabled = true;
+                btn.innerText = `مكتملة! متوفرة بعد ${hoursLeft} س و ${minsLeft} د`;
+                btn.style.background = "#94a3b8";
+                desc.innerText = "خديتي نقاط الحضور اليومي! ارجع بعد انتهاء العداد.";
+            } else {
+                btn.disabled = false;
+                btn.innerText = "أخذ النقاط اليومية";
+                btn.style.background = "var(--green)";
+                desc.innerText = "المكافأة اليومية جاهزة! اضغط لأخذ النقاط.";
+            }
+        }
+
+        function addDailyPoints() {
+            if (!currentUser) {
+                alert("خاصك تسجل الدخول أولاً باش تاخد نقط الحضور اليومي!");
+                openAuthModal();
+                return;
+            }
+
+            const lastClaim = currentUserData ? (currentUserData.lastDaily || 0) : 0;
+            const now = Date.now();
+            const dayInMs = 24 * 60 * 60 * 1000;
+
+            if (now - lastClaim < dayInMs) {
+                alert("خديتي المكافأة اليومية! خاصك تسنى تفوت 24 ساعة كاملة.");
+                return;
+            }
+
+            const dailyReward = globalCfg.dailyPts || 100;
+            db.ref('users/' + currentUser).update({
+                points: firebase.database.ServerValue.increment(dailyReward),
+                lastDaily: now
+            }).then(() => {
+                alert(`مبروك! خديتي ${dailyReward} نقطة ديال الحضور اليومي 🎉 رجع بعد 24 ساعة.`);
+            });
+        }
+
+        let selectedRewardCost = 0;
+        let selectedRewardName = "";
+
+        function openRedeem(cost, title) {
+            if (!currentUser) {
+                alert("خاصك ضروري تسجل الدخول أو دير حساب جديد من الفوق باش تحول النقط!");
+                openAuthModal();
+                return;
+            }
+
+            const currentPts = currentUserData ? (currentUserData.points || 0) : 0;
+            if (currentPts < cost) {
+                alert(`عفواً، رصيدك غير كافي! عندك ${currentPts} نقطة وخاصك ${cost - currentPts} إضافية.`);
+                return;
+            }
+
+            selectedRewardCost = cost;
+            selectedRewardName = title;
+            document.getElementById('modalRewardTitle').innerText = `طلب: ${title}`;
+            document.getElementById('playerFfId').value = "";
+            document.getElementById('redeemModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('redeemModal').classList.remove('active');
+        }
+
+        function confirmRedeem() {
+            const playerId = document.getElementById('playerFfId').value.trim();
+            if (!playerId || playerId.length < 6) {
+                alert("عافاك دخل آيدي فري فاير (ID) صحيح كيتكون من 6 أرقام على الأقل!");
+                return;
+            }
+
+            db.ref('users/' + currentUser + '/points').set(firebase.database.ServerValue.increment(-selectedRewardCost)).then(() => {
+                const newOrderRef = db.ref('orders').push();
+                newOrderRef.set({
+                    username: currentUser,
+                    playerId: playerId,
+                    reward: selectedRewardName,
+                    cost: selectedRewardCost,
+                    time: new Date().toLocaleString('ar-MA'),
+                    status: 'pending',
+                    refunded: false,
+                    createdAt: Date.now()
+                }).then(() => {
+                    closeModal();
+                    alert(`تهانينا ${currentUser}! تم تسجيل طلب شحن (${selectedRewardName}) للآيدي: ${playerId}.\nتقدر دابا تتبع حالة الطلب من قسم "الطلبيات" فـ القائمة الجانبية.`);
+                });
+            });
+        }
+
+        function toggleDrawer() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            drawer.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function switchView(viewKey) {
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+            const targetView = document.getElementById('view-' + viewKey);
+            const targetTab = document.getElementById('tab-' + viewKey);
+
+            if (targetView) targetView.classList.add('active');
+            if (targetTab) targetTab.classList.add('active');
+
+            if (viewKey === 'tasks') {
+                markTasksAsSeen();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showSettings() {
+            const brand = document.getElementById('deviceBrand').value;
+            const presets = {
+                samsung: { gen: 98, red: 90, x2: 92, dpi: 550 },
+                redmi: { gen: 100, red: 95, x2: 95, dpi: 480 },
+                infinix: { gen: 96, red: 88, x2: 89, dpi: 420 },
+                iphone: { gen: 85, red: 80, x2: 78, dpi: 'افتراضي' },
+                oppo: { gen: 94, red: 89, x2: 91, dpi: 450 }
+            };
+            const data = presets[brand];
+            document.getElementById('valGen').innerText = data.gen;
+            document.getElementById('valRed').innerText = data.red;
+            document.getElementById('val2x').innerText = data.x2;
+            document.getElementById('valDpi').innerText = data.dpi;
+            document.getElementById('settingsBox').style.display = 'grid';
+        }
+
+        // ==========================================
+        // مولد الزخرفة المطور (عربي وإنجليزي فخم)
+        // ==========================================
+        function renderNames() {
+            const input = document.getElementById('rawName').value.trim();
+            if (!input) {
+                alert("اكتب اسماً أولاً لزخرفته!");
+                return;
+            }
+
+            const toSmallCaps = (str) => {
+                const map = { a:'ᴀ', b:'ʙ', c:'ᴄ', d:'ᴅ', e:'ᴇ', f:'ꜰ', g:'ɢ', h:'ʜ', i:'ɪ', j:'ᴊ', k:'ᴋ', l:'ʟ', m:'ᴍ', n:'ɴ', o:'ᴏ', p:'ᴘ', q:'ǫ', r:'ʀ', s:'ꜱ', t:'ᴛ', u:'ᴜ', v:'ᴠ', w:'ᴡ', x:'x', y:'ʏ', z:'ᴢ' };
+                return str.toLowerCase().split('').map(c => map[c] || c).join('');
+            };
+
+            const toGothic = (str) => {
+                const map = { a:'𝔞', b:'𝔟', c:'𝔠', d:'𝔡', e:'𝔢', f:'𝔣', g:'𝔤', h:'𝔥', i:'𝔦', j:'𝔧', k:'𝔨', l:'𝔩', m:'𝔪', n:'𝔫', o:'𝔬', p:'𝔭', q:'𝔮', r:'𝔯', s:'𝔰', t:'𝔱', u:'𝔲', v:'𝔳', w:'𝔴', x:'𝔵', y:'𝔶', z:'𝔷' };
+                return str.toLowerCase().split('').map(c => map[c] || c).join('');
+            };
+
+            const toCursive = (str) => {
+                const map = { a:'𝓪', b:'𝓫', c:'𝓬', d:'𝓭', e:'𝓮', f:'𝓯', g:'𝓰', h:'𝓱', i:'𝓲', j:'𝓳', k:'𝓴', l:'𝓵', m:'𝓶', n:'𝓷', o:'𝓸', p:'𝓹', q:'𝓺', r:'𝓻', s:'𝓼', t:'𝓽', u:'𝓾', v:'𝓿', w:'𝔀', x:'𝔁', y:'𝔂', z:'𝔃' };
+                return str.toLowerCase().split('').map(c => map[c] || c).join('');
+            };
+
+            const sc = toSmallCaps(input);
+            const goth = toGothic(input);
+            const curv = toCursive(input);
+
+            const formats = [
+                `★彡[${input}]彡★`,
+                `亗 『${input}』 亗`,
+                `꧁༺${input}༻꧂`,
+                `父 ${input} 父`,
+                `⚡『${sc}』⚡`,
+                `👑 ☬${input}☬ 👑`,
+                `〆${sc}࿐`,
+                `⚔️ 𝕯𝖊𝖆𝖙𝖍 | ${input}`,
+                `『V』• ${sc}`,
+                `亗 ᴛ ᴏ x ɪ ᴄ • ${sc}`,
+                `༺LeGeNd༻ ${goth}`,
+                `メ S A 7 R A W I • ${input}`,
+                `乡${sc}乡`,
+                `炎 ${input} 炎`,
+                `『ᴬᴸ』• ${sc} ⚡`,
+                `☬ ${goth} ☬`,
+                `✿ ﮼${input} ✿`,
+                `★ 𝓚𝓘𝓝𝓖 ★ ${curv}`,
+                `༒ ₲ØĐ ༒ ${input}`,
+                `⪨ ${sc} ⪩`,
+                `💎 『${input}』 💎`,
+                `乂 ${sc} 乂`
+            ];
+
+            const container = document.getElementById('outputNames');
+            container.innerHTML = '';
+
+            formats.forEach(f => {
+                const box = document.createElement('div');
+                box.style = "display:flex; justify-content:space-between; align-items:center; background:#f1f5f9; padding:10px 14px; border-radius:10px; border:1px solid var(--border);";
+                box.innerHTML = `
+                    <span style="font-weight:900; font-size:1.02rem; color:var(--text-main); font-family:'Cairo', sans-serif;">${f}</span> 
+                    <button onclick="navigator.clipboard.writeText('${f}'); alert('تم نسخ الاسم المزخرف بنجاح!');" style="background:var(--primary); color:#fff; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; font-weight:800; font-size:0.8rem; box-shadow:0 2px 6px rgba(255,87,34,0.25);">نسخ 📋</button>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        // ==========================================
+        // نظام النسخ والمشاركة المطور إلى فيسبوك
+        // ==========================================
+        function copyShare() {
+            const refCode = currentUser ? currentUser : "guest";
+            const shareUrl = `${window.location.origin}${window.location.pathname}?ref=${refCode}`;
+
+            // النص التسويقي الكامل الجاهز للتعليقات
+            const promotionalText = `🔥 المنصة الأولى لـ Free Fire في المغرب! 🎮💎\n🎯 كاشف حساسية الهيدشوت والـ DPI المناسب لهاتفك بدقة 100%\n🪄 زخرفة أسماء أسطورية ومقبولة في اللعبة\n🎁 قسم شحن الجواهر والبويا باص عبر الـ ID مجاناً!\n\n👇 ادخل الآن وجرب بنفسك:\n${shareUrl}`;
+
+            navigator.clipboard.writeText(promotionalText).then(() => {
+                alert("تم نسخ نص المنشور الإعلاني ورابطك بنجاح! 📋\nسيتم نقلك الآن إلى فيسبوك للصقه فوراً في التعليقات.");
+                window.open(FACEBOOK_TARGET_URL, '_blank');
+            }).catch(() => {
+                // في حالة متصفحات قديمة لا تدعم clipboard.writeText
+                const shareInput = document.getElementById("shareInput");
+                shareInput.value = promotionalText;
+                shareInput.select();
+                document.execCommand("copy");
+                alert("تم نسخ المنشور الإعلاني ورابطك بنجاح! 📋\nسيتم نقلك الآن إلى فيسبوك.");
+                window.open(FACEBOOK_TARGET_URL, '_blank');
+            });
+        }
+
+        processReferralStrict();
+        listenToGlobalData();
+        listenToCurrentUser();
+    </script>
+</body>
+</html>

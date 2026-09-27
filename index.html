@@ -649,7 +649,7 @@
                 <li class="drawer-item" onclick="switchView('orders'); toggleDrawer();" style="color: var(--secondary);"> الطلبيات (تتبع الشحن)</li>
                 <li class="drawer-item" onclick="switchView('convert'); toggleDrawer();" style="color: var(--primary);"> تحويل النقاط (صرف الجواهر)</li>
                 <li class="drawer-item" onclick="switchView('tasks'); toggleDrawer();">
-                    🎁 المهام والإحالة
+                     المهام والإحالة
                     <div class="drawer-dot" id="drawerTasksDot"></div>
                 </li>
                 <li class="drawer-item" onclick="switchView('dpi'); toggleDrawer();"> إعدادات الهواتف (DPI)</li>
@@ -1687,7 +1687,7 @@
             const shareUrl = `${window.location.origin}${window.location.pathname}?ref=${refCode}`;
 
             // النص التسويقي الكامل الجاهز للتعليقات
-            const promotionalText = ` وأخيرا صحراوي أسطورة العالم أنشئ موقع لتوزيع الجوائز على المتابعين 💎🎁\nوفيه أيضا افضل إعدادات الهيدشوت المناسب لهاتفك 🎯\n🪄و زخرفة أسماء أسطورية ومقبولة في اللعبة\nو قسم شحن الجواهر والبويا باص عبر الـ ID عن طريق جمع النقط\n\n👇 ادخل الآن وجرب بنفسك:\n${shareUrl}`;
+            const promotionalText = ` وأخيرا صحراوي أسطورة العالم أنشئ موقع لتوزيع الجوائز على المتابعين 💎🎁\nوفيه أيضا افضل إعدادات الهيدشوت المناسب لهاتفك 🎯\nو زخرفة أسماء أسطورية ومقبولة في اللعبة\nو قسم شحن الجواهر والبويا باص عبر الـ ID عن طريق جمع النقط\n\n👇 ادخل الآن وجرب بنفسك:\n${shareUrl}`;
 
             navigator.clipboard.writeText(promotionalText).then(() => {
                 alert("تم نسخ النص ورابطك بنجاح! 📋\nسيتم نقلك الآن إلى فيسبوك للصقه فوراً في التعليقات.");

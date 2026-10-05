@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <title>صحراوي غيمينغ | SA7RAWI GAMING </title>
-<meta name="description" content="موقع صحراوي غيمينغ SA7RAWI: أفضل إعدادات هيدشوت وزخرفة أسماء فري فاير مقبولة، وقسم تحويل النقاط وشحن الجواهر عبر الآيدي.">
-<meta name="keywords" content="صحراوي, صحراوي أسطورة العالم ,  صحراوي غيمينغ, sa7rawi, sa7rawi gaming, sa7rawi ff , فري فاير, زخرفة اسماء, هيدشوت, شحن جواهر">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://sa7rawi.shop/">
-
-<!-- وسوم المشاركة فـ الفيسبوك والشبكات -->
-<meta property="og:title" content="صحراوي غيمينغ - SA7RAWI GAMING">
-<meta property="og:description" content="موقع الصحراوي الرسمي لأدوات فري فاير وشحن الجواهر والزخرفة.">
-<meta property="og:url" content="https://sa7rawi.shop/">
-<meta property="og:type" content="website">
-<meta name="google-site-verification" content="N2vzYmYGbSOmVJXMlDZ2mM0Lup5NcBZ_I1YYVtytqks" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-   
+
+    <!-- العنوان الرسمي والـ SEO لتحسين الظهور في محرك البحث Google -->
+    <title>صحراوي غيمينغ | SA7RAWI GAMING</title>
+    <meta name="description" content="موقع صحراوي غيمينغ SA7RAWI: أفضل إعدادات هيدشوت وزخرفة أسماء فري فاير مقبولة، وقسم تحويل النقاط وشحن الجواهر عبر الآيدي.">
+    <meta name="keywords" content="صحراوي, صحراوي أسطورة العالم , صحراوي غيمينغ, sa7rawi, sa7rawi gaming, sa7rawi ff , فري فاير, زخرفة اسماء, هيدشوت, شحن جواهر">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sa7rawi.shop/">
+
+    <!-- كود إثبات ملكية الموقع في Google Search Console -->
+    <meta name="google-site-verification" content="N2vzYmYGbSOmVJXMlDZ2mM0Lup5NcBZ_I1YYVtytqks" />
+
+    <!-- أيقونة وشعار الموقع الرسمي في المتصفح وجوجل (بدل الرابط برابط شعارك) -->
+    <link rel="icon" type="image/png" href="https://sa7rawi.shop/favicon.png">
+    <link rel="apple-touch-icon" href="https://sa7rawi.shop/favicon.png">
+
+    <!-- وسوم المعاينة عند مشاركة الرابط (فيسبوك، واتساب، وتويتر) -->
+    <meta property="og:title" content="صحراوي غيمينغ - SA7RAWI GAMING">
+    <meta property="og:description" content="موقع الصحراوي الرسمي لأدوات فري فاير وشحن الجواهر والزخرفة.">
+    <meta property="og:url" content="https://sa7rawi.shop/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://i.postimg.cc/PqPgY99W/IMG-20260925-220829.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://i.postimg.cc/PqPgY99W/IMG-20260925-220829.jpg">
+
     <!-- استدعاء خطوط عربية وأجنبية فخمة للألعاب والتطبيقات -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -397,6 +408,13 @@
             touch-action: manipulation;
         }
 
+        .btn-convert.disabled-pack {
+            background: #f1f5f9;
+            color: #94a3b8;
+            border-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
         .badge-status {
             padding: 5px 10px;
             border-radius: 6px;
@@ -438,31 +456,41 @@
             border-color: #e11d48;
         }
 
-        .task-action-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 12px;
+        .task-action-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 14px;
         }
 
-        .btn-task-step {
-            background: #f1f5f9;
-            color: var(--text-main);
-            border: 1.5px solid var(--border);
-            padding: 10px 8px;
-            border-radius: 8px;
-            font-size: 0.82rem;
+        .btn-step-block {
+            width: 100%;
+            background: #eff6ff;
+            color: var(--secondary);
+            border: 1.5px solid #bfdbfe;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.9rem;
             font-weight: 800;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 6px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.08);
+            transition: 0.2s;
         }
 
-        .btn-task-step.attached {
+        .btn-step-block.attach-block {
+            background: #f8fafc;
+            color: var(--text-main);
+            border: 2px dashed #cbd5e1;
+        }
+
+        .btn-step-block.attach-block.attached {
             background: #dcfce7;
-            border-color: #86efac;
+            border: 2px solid #86efac;
             color: #166534;
         }
 
@@ -640,7 +668,7 @@
         </button>
 
         <div class="user-points-pill">
-            <span> النقط:</span>
+            <span>💎 النقط:</span>
             <b id="points-val">0</b>
         </div>
 
@@ -657,16 +685,16 @@
                 <button class="close-btn" onclick="toggleDrawer()">&times;</button>
             </div>
             <ul class="drawer-menu">
-                <li class="drawer-item active-item" onclick="switchView('home'); toggleDrawer();"> الرئيسية</li>
-                <li class="drawer-item" onclick="switchView('orders'); toggleDrawer();" style="color: var(--secondary);"> الطلبيات (تتبع الشحن)</li>
-                <li class="drawer-item" onclick="switchView('convert'); toggleDrawer();" style="color: var(--primary);"> تحويل النقاط (صرف الجواهر)</li>
+                <li class="drawer-item active-item" onclick="switchView('home'); toggleDrawer();">🏠 الرئيسية</li>
+                <li class="drawer-item" onclick="switchView('orders'); toggleDrawer();" style="color: var(--secondary);">📦 الطلبيات (تتبع الشحن)</li>
+                <li class="drawer-item" onclick="switchView('convert'); toggleDrawer();" style="color: var(--primary);">💎 تحويل النقاط (صرف الجواهر)</li>
                 <li class="drawer-item" onclick="switchView('tasks'); toggleDrawer();">
-                     المهام والإحالة
+                    🎁 المهام والإحالة
                     <div class="drawer-dot" id="drawerTasksDot"></div>
                 </li>
-                <li class="drawer-item" onclick="switchView('dpi'); toggleDrawer();"> إعدادات الهواتف (DPI)</li>
-                <li class="drawer-item" onclick="switchView('names'); toggleDrawer();"> زخرفة الأسماء</li>
-                <li class="drawer-item" onclick="window.open('https://www.facebook.com/profile.php?id=61595170822605', '_blank')"> صفحة فيسبوك</li>
+                <li class="drawer-item" onclick="switchView('dpi'); toggleDrawer();">🎯 إعدادات الهواتف (DPI)</li>
+                <li class="drawer-item" onclick="switchView('names'); toggleDrawer();">✨ زخرفة الأسماء</li>
+                <li class="drawer-item" onclick="window.open('https://www.facebook.com/profile.php?id=61595170822605', '_blank')">صفحة الفيسبوك</li>
             </ul>
         </div>
         
@@ -688,7 +716,7 @@
         <section id="view-orders" class="page-view">
             <div class="card" style="border-right: 4px solid var(--secondary);">
                 <h2>📦 سجل طلبيات الشحن</h2>
-                <p style="margin-bottom:0;">تتبع حالة شحن الجواهر الخاصة بك. إذا رُفض الطلب لأي سبب، يسترجع حسابك النقاط تلقائياً.</p>
+                <p style="margin-bottom:0;">تتبع حالة شحن الجواهر الخاصة بك ومعاينة قرارات الإدارة فوراً.</p>
             </div>
             <div id="userOrdersList">
                 <p style="text-align:center; color:var(--text-sub); font-size:0.85rem;">سجل الدخول لعرض طلبياتك.</p>
@@ -702,45 +730,8 @@
                 <p style="margin-bottom:0;">اجمع النقط وحولهم مباشرة لجواهر عبر الـ ID.</p>
             </div>
 
-            <div class="convert-card">
-                <div class="convert-info">
-                    <h4>💎 50 جوهرة فري فاير</h4>
-                    <p>المطلوب: <span style="color:var(--primary);">500 نقطة</span></p>
-                </div>
-                <button class="btn-convert" onclick="openRedeem(500, '50 جوهرة')">شحن</button>
-            </div>
-
-            <div class="convert-card">
-                <div class="convert-info">
-                    <h4>💎 100 جوهرة فري فاير</h4>
-                    <p>المطلوب: <span style="color:var(--primary);">1000 نقطة</span></p>
-                </div>
-                <button class="btn-convert" onclick="openRedeem(1000, '100 جوهرة')">تحويل</button>
-            </div>
-
-            <div class="convert-card">
-                <div class="convert-info">
-                    <h4>💎 200 جوهرة فري فاير</h4>
-                    <p>المطلوب: <span style="color:var(--primary);">1500 نقطة</span></p>
-                </div>
-                <button class="btn-convert" onclick="openRedeem(1500, '200 جوهرة')">شحن</button>
-            </div>
-
-            <div class="convert-card" style="border-color:#60a5fa;">
-                <div class="convert-info">
-                    <h4>🎫 تفعيل بويا باص</h4>
-                    <p>المطلوب: <span style="color:#2563eb;">3500 نقطة</span></p>
-                </div>
-                <button class="btn-convert" style="border-color:#93c5fd; color:#2563eb;" onclick="openRedeem(3500, 'بويا باص')">شحن</button>
-            </div>
-
-            <div class="convert-card" style="border-color:#f59e0b; background:#fffbeb;">
-                <div class="convert-info">
-                    <h4>👑 10,000 جوهرة</h4>
-                    <p>المطلوب: <span style="color:#b45309;">5000 نقطة</span></p>
-                </div>
-                <button class="btn-convert" style="background:#f59e0b; color:#fff; border:none;" onclick="openRedeem(5000, '10,000 جوهرة')">شحن</button>
-            </div>
+            <!-- حاوية عرض باقات الشحن -->
+            <div id="dynamicPacksContainer" style="display:flex; flex-direction:column; gap:12px;"></div>
         </section>
 
         <!-- واجهة: المهام والإحالة -->
@@ -765,15 +756,14 @@
         <section id="view-dpi" class="page-view">
             <div class="card">
                 <h2>⚙️ كاشف حساسية الهيدشوت</h2>
-                <p>احتر نوع هاتفك      :</p>
+                <p>اختر نوع هاتفك :</p>
                 
                 <select class="styled-select" id="deviceBrand">
                     <option value="samsung">Samsung</option>
-                    <option value="redmi">Xiaomi / Redmi </option>
+                    <option value="redmi">Xiaomi / Redmi / Realme</option>
                     <option value="infinix">Infinix / Tecno </option>
-                    <option value="iphone">iPhone 
-                    </option>
-                    <option value="oppo">Oppo / Realme</option>
+                    <option value="iphone">iPhone</option>
+                    <option value="oppo">Oppo </option>
                 </select>
 
                 <button class="btn-action" onclick="showSettings()">إظهار الإعدادات</button>
@@ -803,28 +793,29 @@
     <!-- نافذة إتمام المهمة وإرفاق الصورة -->
     <div class="modal-overlay" id="taskVerifyModal">
         <div class="modal-content">
-            <h3 style="font-size:1.1rem; color:var(--primary); margin-bottom:6px;" id="taskModalTitle">إتمام المهمة</h3>
-            <p style="font-size:0.8rem; color:var(--text-sub); margin-bottom:14px;" id="taskModalDesc">أكمل الخطوات وأرفق لقطة الشاشة للتأكيد:</p>
+            <h3 style="font-size:1.15rem; color:var(--primary); margin-bottom:6px;" id="taskModalTitle">إتمام المهمة</h3>
+            <p style="font-size:0.82rem; color:var(--text-sub); margin-bottom:14px;" id="taskModalDesc">أكمل المهمة عبر الرابط ثم أرفق صورة الإثبات لتفعيل زر التأكيد:</p>
             
-            <div class="task-action-grid">
-                <button class="btn-task-step" id="btnTaskVisit" onclick="openTaskUrl()">
-                    🔗 1. الذهاب للمهمة
+            <div class="task-action-vertical">
+                <button class="btn-step-block" id="btnTaskVisit" onclick="openTaskUrl()">
+                    🔗 1. الذهاب إلى رابط المهمة
                 </button>
-                <label class="btn-task-step" id="btnTaskAttachLabel" for="taskScreenshotInput">
-                    📷 2. إرفاق صورة
+
+                <label class="btn-step-block attach-block" id="btnTaskAttachLabel" for="taskScreenshotInput">
+                    📷 2. إرفاق لقطة شاشة كإثبات
                 </label>
                 <input type="file" id="taskScreenshotInput" accept="image/*" style="display:none;" onchange="handleImageSelected(this)">
             </div>
 
-            <p id="imageStatusText" style="font-size:0.75rem; color:var(--red); margin-bottom:10px; font-weight:bold;">
+            <p id="imageStatusText" style="font-size:0.75rem; color:var(--red); margin-bottom:12px; font-weight:bold;">
                 ⚠️ يجب إرفاق لقطة شاشة لتفعيل زر التأكيد
             </p>
 
             <div style="display:flex; gap:8px;">
-                <button class="btn-action" id="btnConfirmTaskSubmit" disabled style="background:#94a3b8; cursor:not-allowed;" onclick="submitTaskProof()">
-                    تأكيد وإرسال
+                <button class="btn-action" id="btnConfirmTaskSubmit" disabled style="flex:1.2; background:#94a3b8; cursor:not-allowed;" onclick="submitTaskProof()">
+                    تأكيد وإرسال الإثبات
                 </button>
-                <button class="btn-action" style="background:#e2e8f0; color:#334155;" onclick="closeTaskModal()">
+                <button class="btn-action" style="flex:0.8; background:#e2e8f0; color:#334155; box-shadow:none;" onclick="closeTaskModal()">
                     إلغاء
                 </button>
             </div>
@@ -857,16 +848,16 @@
     <div class="modal-overlay" id="redeemModal">
         <div class="modal-content">
             <h3 style="font-size:1.1rem; color:var(--primary); margin-bottom:8px;" id="modalRewardTitle">شحن الجواهر</h3>
-            <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:14px;">أدخل ID :</p>
-            <input type="number" id="playerFfId" class="styled-input" placeholder=": " style="text-align:center;">
+            <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:14px;">أدخل ID الخاص بحسابك في فري فاير:</p>
+            <input type="number" id="playerFfId" class="styled-input" placeholder="مثال: 123456789" style="text-align:center;">
             <div style="display:flex; gap:8px; margin-top:6px;">
-                <button class="btn-action" onclick="confirmRedeem()">تأكيد الشحن</button>
+                <button class="btn-action" id="btnConfirmRedeemAction" onclick="confirmRedeem()">تأكيد الشحن</button>
                 <button class="btn-action" style="background:#e2e8f0; color:#334155;" onclick="closeModal()">إلغاء</button>
             </div>
         </div>
     </div>
 
-    <!-- 5. الشريط السفلي الثابت -->
+    <!-- الشريط السفلي الثابت -->
     <nav class="bottom-nav">
         <button class="nav-btn active" id="tab-home" onclick="switchView('home')">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -892,10 +883,7 @@
     </nav>
 
     <script>
-        // ==========================================
-        // 1. رابط مجموعة فيسبوك المستهدفة للمشاركة
-        // ==========================================
-        const FACEBOOK_TARGET_URL = "https://facebook.com/groups/604782475658948/";
+        const FACEBOOK_TARGET_URL = "https://www.facebook.com/profile.php?id=61595170822605";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBFLNyTaqCn2CmejAPvD4k0ZRn9FByuGMY",
@@ -913,18 +901,48 @@
         }
         const db = firebase.database();
 
+        // مزامنة توقيت السيرفر الدقيق لمنع التلاعب بساعة الهاتف
+        let serverTimeOffset = 0;
+        db.ref('.info/serverTimeOffset').on('value', snap => {
+            serverTimeOffset = snap.val() || 0;
+        });
+
+        function getServerNow() {
+            return Date.now() + serverTimeOffset;
+        }
+
+        // نظام تتبع الزوار المتصلين حالياً
+        const connectedRef = db.ref('.info/connected');
+        connectedRef.on('value', (snap) => {
+            if (snap.val() === true) {
+                const userPresenceRef = db.ref('onlineUsers').push();
+                userPresenceRef.onDisconnect().remove();
+                userPresenceRef.set(true);
+            }
+        });
+
         let currentUser = localStorage.getItem('sahrawi_current_user') || null;
         let currentUserData = null;
         let userTaskCompletions = {};
         let cachedTasks = {};
         let globalCfg = { welcomePts: 50, dailyPts: 100, refPts: 50 };
+        let defaultPacks = [
+            { diamonds: 50, points: 500 },
+            { diamonds: 100, points: 1000 },
+            { diamonds: 200, points: 1500 },
+            { diamonds: 310, points: 2800 },
+            { diamonds: 520, points: 4500 }
+        ];
+        let currentPacksList = defaultPacks;
+        let hasUsed50Diamonds = false;
         let authMode = 'login';
         let isSubmittingProof = false;
+        let isRedeemingOrder = false;
 
         function getDeviceFingerprint() {
             let fp = localStorage.getItem('sahrawi_device_fingerprint');
             if (!fp) {
-                fp = 'DEV_' + Math.random().toString(36).substring(2, 12) + '_' + Date.now();
+                fp = 'DEV_' + Math.random().toString(36).substring(2, 12) + '_' + getServerNow();
                 localStorage.setItem('sahrawi_device_fingerprint', fp);
             }
             return fp;
@@ -940,7 +958,7 @@
                 deviceRef.once('value').then(snap => {
                     if (!snap.exists()) {
                         deviceRef.set({
-                            registeredAt: Date.now(),
+                            registeredAt: getServerNow(),
                             referredBy: refUser
                         }).then(() => {
                             const targetUserRef = db.ref('users/' + refUser);
@@ -956,7 +974,55 @@
             }
         }
 
+        // عرض الباقات مع فحص شرط 50 جوهرة الترحيبية
+        function renderRechargePacks(packs) {
+            const container = document.getElementById('dynamicPacksContainer');
+            if (!container) return;
+            container.innerHTML = "";
+
+            currentPacksList = (packs && packs.length) ? packs : defaultPacks;
+
+            currentPacksList.forEach(pack => {
+                const card = document.createElement('div');
+                card.className = "convert-card";
+                
+                const isFiftyPack = (parseInt(pack.diamonds) === 50);
+                const isPackLocked = isFiftyPack && hasUsed50Diamonds;
+
+                if (isPackLocked) {
+                    card.style.opacity = "0.75";
+                    card.style.borderColor = "#cbd5e1";
+                    card.innerHTML = `
+                        <div class="convert-info">
+                            <h4>💎 50 جوهرة فري فاير</h4>
+                            <p style="color:var(--red); font-weight:800;">نفذ المنتج (عرض لمرة واحدة فقط) 🔒</p>
+                        </div>
+                        <button class="btn-convert disabled-pack" disabled>نفذ المنتج</button>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="convert-info">
+                            <h4>💎 ${pack.diamonds} جوهرة فري فاير</h4>
+                            <p>المطلوب: <span style="color:var(--primary); font-weight:800;">${pack.points} نقطة</span></p>
+                        </div>
+                        <button class="btn-convert" onclick="openRedeem(${pack.points}, '${pack.diamonds} جوهرة')">شحن</button>
+                    `;
+                }
+                container.appendChild(card);
+            });
+        }
+
         function listenToGlobalData() {
+            renderRechargePacks(defaultPacks);
+
+            db.ref('rechargePacks').on('value', snap => {
+                if (snap.exists()) {
+                    const val = snap.val();
+                    const packs = Array.isArray(val) ? val : Object.values(val);
+                    renderRechargePacks(packs);
+                }
+            });
+
             db.ref('settings').on('value', snap => {
                 if (snap.exists()) {
                     globalCfg = snap.val();
@@ -984,6 +1050,8 @@
                     const cards = snap.val();
                     Object.keys(cards).forEach((k, index) => {
                         const card = cards[k];
+                        if (card.targetUser && card.targetUser !== currentUser) return;
+
                         const cDiv = document.createElement('div');
                         cDiv.className = "card";
                         if (index === 0) cDiv.style.borderRight = "4px solid var(--primary)";
@@ -1025,9 +1093,27 @@
                         <div class="card" style="border-right: 4px solid var(--primary);">
                             <h2>مرحباً بيك فالصحراوي غيمينغ! 👋</h2>
                             <p>أحسن إعدادات وزخرفة الأسماء وقسم تحويل النقط لجواهر حقيقية عبر الآيدي.</p>
-                            <button class="btn-action" onclick="switchView('convert')">اصرف الجواهر  💎</button>
+                            <button class="btn-action" onclick="switchView('convert')">اصرف الجواهر 💎</button>
                         </div>
                     `;
+                }
+            });
+
+            // استماع ديناميكي لحساسيات الهواتف المضافة من لوحة الأدمن
+            db.ref('deviceSettings').on('value', snap => {
+                if (snap.exists()) {
+                    const devSelect = document.getElementById('deviceBrand');
+                    if (devSelect) {
+                        devSelect.innerHTML = "";
+                        const list = snap.val();
+                        const items = Array.isArray(list) ? list : Object.values(list);
+                        items.forEach(d => {
+                            const opt = document.createElement('option');
+                            opt.value = d.id;
+                            opt.innerText = d.name;
+                            devSelect.appendChild(opt);
+                        });
+                    }
                 }
             });
 
@@ -1086,7 +1172,7 @@
         function renderDynamicTasks(tasks) {
             const container = document.getElementById('dynamicTasksContainer');
             container.innerHTML = "";
-            const now = Date.now();
+            const now = getServerNow();
 
             const availableTasks = [];
             const completedTasks = [];
@@ -1189,11 +1275,30 @@
                 renderDynamicTasks(cachedTasks);
             });
 
+            // مراقبة إثباتات المهام: إذا تم رفض الإثبات، تحذف حالة الإكمال ليعيد المستخدم إنجاز المهمة فوراً
+            db.ref('taskProofs').orderByChild('username').equalTo(currentUser).on('value', snap => {
+                if (snap.exists()) {
+                    const proofs = snap.val();
+                    Object.keys(proofs).forEach(k => {
+                        const p = proofs[k];
+                        if (p.status === 'rejected') {
+                            db.ref('user_task_completions/' + currentUser + '/' + p.taskId).remove();
+                            db.ref('taskProofs/' + k).remove();
+                        }
+                    });
+                }
+            });
+
+            // تتبع الطلبيات وفحص شرط قبول 50 جوهرة
             db.ref('orders').orderByChild('username').equalTo(currentUser).on('value', snap => {
                 const list = document.getElementById('userOrdersList');
                 list.innerHTML = "";
+                
+                hasUsed50Diamonds = false;
+
                 if (!snap.exists()) {
                     list.innerHTML = "<p style='text-align:center; color:var(--text-sub); font-size:0.85rem;'>ليس لديك أي طلبيات شحن حالياً.</p>";
+                    renderRechargePacks(currentPacksList);
                     return;
                 }
 
@@ -1201,10 +1306,8 @@
                 Object.keys(orders).reverse().forEach(orderId => {
                     const ord = orders[orderId];
 
-                    if (ord.status === 'rejected' && !ord.refunded) {
-                        db.ref('users/' + currentUser + '/points').set(firebase.database.ServerValue.increment(ord.cost || 0));
-                        db.ref('orders/' + orderId + '/refunded').set(true);
-                        alert(`تنبيه: تم رفض طلبك (${ord.reward}) وتم استرجاع ${ord.cost} نقطة إلى رصيدك!`);
+                    if ((ord.reward.includes('50') || ord.cost === 500) && ord.status === 'done') {
+                        hasUsed50Diamonds = true;
                     }
 
                     let statusBadge = '';
@@ -1213,7 +1316,8 @@
                     } else if (ord.status === 'done') {
                         statusBadge = '<span class="badge-status badge-done">تم الشحن بنجاح ✅</span>';
                     } else if (ord.status === 'rejected') {
-                        statusBadge = '<span class="badge-status badge-rejected">تم رفض الشحن (رُدّت النقط) ❌</span>';
+                        const reasonText = ord.rejectReason ? ` (${ord.rejectReason})` : '';
+                        statusBadge = `<span class="badge-status badge-rejected">مرفوض${reasonText} ❌</span>`;
                     }
 
                     const card = document.createElement('div');
@@ -1227,6 +1331,8 @@
                     `;
                     list.appendChild(card);
                 });
+
+                renderRechargePacks(currentPacksList);
             });
         }
 
@@ -1237,8 +1343,10 @@
             document.getElementById('shareInput').value = `${window.location.origin}${window.location.pathname}?ref=guest`;
             document.getElementById('userOrdersList').innerHTML = "<p style='text-align:center; color:var(--text-sub); font-size:0.85rem;'>سجل الدخول لعرض طلبياتك.</p>";
             userTaskCompletions = {};
+            hasUsed50Diamonds = false;
             checkDailyTaskStatus();
             renderDynamicTasks(cachedTasks);
+            renderRechargePacks(currentPacksList);
         }
 
         let currentTaskContext = null;
@@ -1263,12 +1371,14 @@
             document.getElementById('taskModalDesc').innerText = desc;
             document.getElementById('imageStatusText').innerText = "⚠️ يجب إرفاق لقطة شاشة لتفعيل زر التأكيد";
             document.getElementById('imageStatusText').style.color = "var(--red)";
-            document.getElementById('btnTaskAttachLabel').classList.remove('attached');
-            document.getElementById('btnTaskAttachLabel').innerText = "📷 2. إرفاق صورة";
+            
+            const attachLabel = document.getElementById('btnTaskAttachLabel');
+            attachLabel.classList.remove('attached');
+            attachLabel.innerText = "📷 2. إرفاق لقطة شاشة كإثبات";
             
             const confirmBtn = document.getElementById('btnConfirmTaskSubmit');
             confirmBtn.disabled = true;
-            confirmBtn.innerHTML = "تأكيد وإرسال";
+            confirmBtn.innerHTML = "تأكيد وإرسال الإثبات";
             confirmBtn.style.background = "#94a3b8";
             confirmBtn.style.cursor = "not-allowed";
             document.getElementById('taskScreenshotInput').value = "";
@@ -1297,7 +1407,7 @@
                     const img = new Image();
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
-                        const maxDimension = 900;
+                        const maxDimension = 500;
                         let width = img.width;
                         let height = img.height;
 
@@ -1314,11 +1424,13 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        selectedProofBase64 = canvas.toDataURL('image/jpeg', 0.65);
+                        selectedProofBase64 = canvas.toDataURL('image/jpeg', 0.5);
 
-                        document.getElementById('btnTaskAttachLabel').classList.add('attached');
-                        document.getElementById('btnTaskAttachLabel').innerText = "✅ تم اختيار الصورة";
-                        document.getElementById('imageStatusText').innerText = "جاهز للإرسال للمراجعة";
+                        const attachLabel = document.getElementById('btnTaskAttachLabel');
+                        attachLabel.classList.add('attached');
+                        attachLabel.innerText = "✅ تم إرفاق الصورة بنجاح";
+                        
+                        document.getElementById('imageStatusText').innerText = "جاهز للإرسال للمراجعة والتحقق";
                         document.getElementById('imageStatusText').style.color = "var(--green)";
                         
                         const confirmBtn = document.getElementById('btnConfirmTaskSubmit');
@@ -1345,7 +1457,7 @@
             confirmBtn.disabled = true;
             confirmBtn.innerHTML = `<span class="spinner"></span> جاري الرفع...`;
 
-            const now = Date.now();
+            const now = getServerNow();
             const proofData = {
                 username: currentUser,
                 taskId: currentTaskContext.id,
@@ -1354,19 +1466,19 @@
                 proofImage: selectedProofBase64,
                 status: 'pending',
                 submittedAt: now,
-                timeString: new Date().toLocaleString('ar-MA')
+                timeString: new Date(now).toLocaleString('ar-MA')
             };
 
             db.ref('taskProofs').push(proofData).then(() => {
                 db.ref('user_task_completions/' + currentUser + '/' + currentTaskContext.id).set(now).then(() => {
                     isSubmittingProof = false;
                     closeTaskModal();
-                    alert("تم إرسال إثبات المهمة بنجاح! تم قفل المهمة ونقلها إلى الأسفل.");
+                    alert("تم إرسال إثبات المهمة بنجاح! تم قفل المهمة ونقلها إلى الأسفل للمراجعة.");
                 });
             }).catch(() => {
                 isSubmittingProof = false;
                 confirmBtn.disabled = false;
-                confirmBtn.innerHTML = "تأكيد وإرسال";
+                confirmBtn.innerHTML = "تأكيد وإرسال الإثبات";
                 alert("وقع خطأ فـ الاتصال! عاود حاول مرة ثانية.");
             });
         }
@@ -1422,7 +1534,7 @@
                             points: welcomePts,
                             banned: false,
                             lastDaily: 0,
-                            createdAt: Date.now()
+                            createdAt: getServerNow()
                         };
                         userRef.set(newUserObj).then(() => {
                             currentUser = username;
@@ -1463,6 +1575,7 @@
                 db.ref('users/' + currentUser).off();
                 db.ref('orders').off();
                 db.ref('user_task_completions/' + currentUser).off();
+                db.ref('taskProofs').off();
             }
             currentUser = null;
             currentUserData = null;
@@ -1485,7 +1598,7 @@
             }
 
             const lastClaim = currentUserData.lastDaily || 0;
-            const now = Date.now();
+            const now = getServerNow();
             const dayInMs = 24 * 60 * 60 * 1000;
 
             if (now - lastClaim < dayInMs) {
@@ -1513,7 +1626,7 @@
             }
 
             const lastClaim = currentUserData ? (currentUserData.lastDaily || 0) : 0;
-            const now = Date.now();
+            const now = getServerNow();
             const dayInMs = 24 * 60 * 60 * 1000;
 
             if (now - lastClaim < dayInMs) {
@@ -1540,6 +1653,11 @@
                 return;
             }
 
+            if (title.includes('50') && hasUsed50Diamonds) {
+                alert("عفواً! لقد استفدت مسبقاً من عرض 50 جوهرة الترحيبي. يرجى جمع النقاط للباقات الأخرى.");
+                return;
+            }
+
             const currentPts = currentUserData ? (currentUserData.points || 0) : 0;
             if (currentPts < cost) {
                 alert(`عفواً، رصيدك غير كافي! عندك ${currentPts} نقطة وخاصك ${cost - currentPts} إضافية.`);
@@ -1550,34 +1668,87 @@
             selectedRewardName = title;
             document.getElementById('modalRewardTitle').innerText = `طلب: ${title}`;
             document.getElementById('playerFfId').value = "";
+            
+            const btn = document.getElementById('btnConfirmRedeemAction');
+            btn.disabled = false;
+            btn.innerHTML = "تأكيد الشحن";
+            btn.style.background = "var(--primary)";
+            
             document.getElementById('redeemModal').classList.add('active');
         }
 
         function closeModal() {
+            if (isRedeemingOrder) return;
             document.getElementById('redeemModal').classList.remove('active');
         }
 
+        // تحويل النقاط وفحص الآيدي المكرر المشحون مسبقاً
         function confirmRedeem() {
+            if (isRedeemingOrder) return;
+
             const playerId = document.getElementById('playerFfId').value.trim();
             if (!playerId || playerId.length < 6) {
-                alert(" دخل آيدي فري فاير (ID) صحيح كيتكون من 6 أرقام على الأقل!");
+                alert("عافاك دخل آيدي فري فاير (ID) صحيح كيتكون من 6 أرقام على الأقل!");
                 return;
             }
 
-            db.ref('users/' + currentUser + '/points').set(firebase.database.ServerValue.increment(-selectedRewardCost)).then(() => {
-                const newOrderRef = db.ref('orders').push();
-                newOrderRef.set({
-                    username: currentUser,
-                    playerId: playerId,
-                    reward: selectedRewardName,
-                    cost: selectedRewardCost,
-                    time: new Date().toLocaleString('ar-MA'),
-                    status: 'pending',
-                    refunded: false,
-                    createdAt: Date.now()
-                }).then(() => {
-                    closeModal();
-                    alert(`تهانينا ${currentUser}! تم تسجيل طلب شحن (${selectedRewardName}) للآيدي: ${playerId}.\nتقدر دابا تتبع حالة الطلب من قسم "الطلبيات" فـ القائمة الجانبية.`);
+            isRedeemingOrder = true;
+            const btn = document.getElementById('btnConfirmRedeemAction');
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner"></span> جاري التحقق والخصم...`;
+
+            db.ref('orders').orderByChild('playerId').equalTo(playerId).once('value').then(dupSnap => {
+                let isDuplicateId = false;
+                if (dupSnap.exists()) {
+                    const allOrdersWithId = dupSnap.val();
+                    Object.keys(allOrdersWithId).forEach(oid => {
+                        if (allOrdersWithId[oid].status === 'done') {
+                            isDuplicateId = true;
+                        }
+                    });
+                }
+
+                const userPointsRef = db.ref('users/' + currentUser + '/points');
+
+                userPointsRef.transaction((currentPoints) => {
+                    if (currentPoints === null) return currentPoints;
+                    if (currentPoints < selectedRewardCost) {
+                        return;
+                    }
+                    return currentPoints - selectedRewardCost;
+                }, (error, committed) => {
+                    if (error) {
+                        isRedeemingOrder = false;
+                        btn.disabled = false;
+                        btn.innerHTML = "تأكيد الشحن";
+                        alert("حدث خطأ في الاتصال بالخادم، يرجى المحاولة لاحقاً!");
+                    } else if (!committed) {
+                        isRedeemingOrder = false;
+                        btn.disabled = false;
+                        btn.innerHTML = "تأكيد الشحن";
+                        alert("عفواً! تم إلغاء الطلب لأن رصيدك الحالي من النقاط غير كافٍ.");
+                        closeModal();
+                    } else {
+                        const now = getServerNow();
+                        const newOrderRef = db.ref('orders').push();
+                        newOrderRef.set({
+                            username: currentUser,
+                            playerId: playerId,
+                            reward: selectedRewardName,
+                            cost: selectedRewardCost,
+                            time: new Date(now).toLocaleString('ar-MA'),
+                            status: 'pending',
+                            isDuplicate: isDuplicateId,
+                            createdAt: now
+                        }).then(() => {
+                            isRedeemingOrder = false;
+                            closeModal();
+                            alert(`تهانينا ${currentUser}! تم تسجيل طلب شحن (${selectedRewardName}) للآيدي: ${playerId}.\nتقدر دابا تتبع حالة الطلب من قسم "الطلبيات" فـ القائمة الجانبية.`);
+                        }).catch(() => {
+                            isRedeemingOrder = false;
+                            closeModal();
+                        });
+                    }
                 });
             });
         }
@@ -1606,26 +1777,40 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // إظهار إعدادات الهواتف بالاعتماد على القيم المخزنة في Firebase
         function showSettings() {
-            const brand = document.getElementById('deviceBrand').value;
-            const presets = {
-                samsung: { gen: 98, red: 90, x2: 92, dpi: 550 },
-                redmi: { gen: 100, red: 95, x2: 95, dpi: 480 },
-                infinix: { gen: 96, red: 88, x2: 89, dpi: 420 },
-                iphone: { gen: 85, red: 80, x2: 78, dpi: 'افتراضي' },
-                oppo: { gen: 94, red: 89, x2: 91, dpi: 450 }
-            };
-            const data = presets[brand];
-            document.getElementById('valGen').innerText = data.gen;
-            document.getElementById('valRed').innerText = data.red;
-            document.getElementById('val2x').innerText = data.x2;
-            document.getElementById('valDpi').innerText = data.dpi;
-            document.getElementById('settingsBox').style.display = 'grid';
+            const brandId = document.getElementById('deviceBrand').value;
+            db.ref('deviceSettings').once('value').then(snap => {
+                if (snap.exists()) {
+                    const list = snap.val();
+                    const items = Array.isArray(list) ? list : Object.values(list);
+                    const found = items.find(d => d.id === brandId);
+                    if (found) {
+                        document.getElementById('valGen').innerText = found.gen;
+                        document.getElementById('valRed').innerText = found.red;
+                        document.getElementById('val2x').innerText = found.x2;
+                        document.getElementById('valDpi').innerText = found.dpi;
+                        document.getElementById('settingsBox').style.display = 'grid';
+                        return;
+                    }
+                }
+                const defaultPresets = {
+                    samsung: { gen: 98, red: 90, x2: 92, dpi: 550 },
+                    redmi: { gen: 100, red: 95, x2: 95, dpi: 480 },
+                    infinix: { gen: 96, red: 88, x2: 89, dpi: 420 },
+                    iphone: { gen: 85, red: 80, x2: 78, dpi: 'افتراضي' },
+                    oppo: { gen: 94, red: 89, x2: 91, dpi: 450 }
+                };
+                const data = defaultPresets[brandId] || defaultPresets.samsung;
+                document.getElementById('valGen').innerText = data.gen;
+                document.getElementById('valRed').innerText = data.red;
+                document.getElementById('val2x').innerText = data.x2;
+                document.getElementById('valDpi').innerText = data.dpi;
+                document.getElementById('settingsBox').style.display = 'grid';
+            });
         }
 
-        // ==========================================
-        // مولد الزخرفة المطور (عربي وإنجليزي فخم)
-        // ==========================================
+        // مولد الزخرفة المطور
         function renderNames() {
             const input = document.getElementById('rawName').value.trim();
             if (!input) {
@@ -1639,12 +1824,12 @@
             };
 
             const toGothic = (str) => {
-                const map = { a:'𝔞', b:'𝔟', c:'𝔠', d:'𝔡', e:'𝔢', f:'𝔣', g:'𝔤', h:'𝔥', i:'𝔦', j:'𝔧', k:'𝔨', l:'𝔩', m:'𝔪', n:'𝔫', o:'𝔬', p:'𝔭', q:'𝔮', r:'𝔯', s:'𝔰', t:'𝔱', u:'𝔲', v:'𝔳', w:'𝔴', x:'𝔵', y:'𝔶', z:'𝔷' };
+                const map = { a:'𝔞', b:'𝔟', c:'𝔠', d:'𝔡', e:'𝔢', f:'𝔣', g:'𝔤', h:'𝔥', i:'𝔦', j:'𝔧', k:'𝔨', l:'ލ', m:'𝔪', n:'𝔫', o:'𝔬', p:'𝔭', q:'𝔮', r:'𝔯', s:'𝔰', t:'𝔱', u:'𝔲', v:'𝔳', w:'𝔴', x:'𝔵', y:'𝔶', z:'𝔷' };
                 return str.toLowerCase().split('').map(c => map[c] || c).join('');
             };
 
             const toCursive = (str) => {
-                const map = { a:'𝓪', b:'𝓫', c:'𝓬', d:'𝓭', e:'𝓮', f:'𝓯', g:'𝓰', h:'𝓱', i:'𝓲', j:'𝓳', k:'𝓴', l:'𝓵', m:'𝓶', n:'𝓷', o:'𝓸', p:'𝓹', q:'𝓺', r:'𝓻', s:'𝓼', t:'𝓽', u:'𝓾', v:'𝓿', w:'𝔀', x:'𝔁', y:'𝔂', z:'𝔃' };
+                const map = { a:'𝓪', b:'𝓫', c:'𝓬', d:'𝓭', e:'𝓮', f:'𝓯', g:'𝓰', h:'𝓱', i:'𝓲', j:'𝓳', k:'𝓴', l:'𝓵', m:'𝓶', n:'𝓷', o:'𝓸', p:'𝓹', q:'𝓺', r:'𝓻', s:'س', t:'𝓽', u:'𝓾', v:'𝓿', w:'𝔀', x:'𝔁', y:'𝔂', z:'𝔃' };
                 return str.toLowerCase().split('').map(c => map[c] || c).join('');
             };
 
@@ -1674,7 +1859,12 @@
                 `༒ ₲ØĐ ༒ ${input}`,
                 `⪨ ${sc} ⪩`,
                 `💎 『${input}』 💎`,
-                `乂 ${sc} 乂`
+                `乂 ${sc} 乂`,
+                `🦅『${sc}』🦅`,
+                `⚡ Ŝ Ᾱ 7 Ȓ Ᾱ Ẅ Ī • ${input}`,
+                `⦅${goth}⦆`,
+                `░▒▓█ ${input} █▓▒░`,
+                `♛『${curv}』♛`
             ];
 
             const container = document.getElementById('outputNames');
@@ -1691,21 +1881,16 @@
             });
         }
 
-        // ==========================================
-        // نظام النسخ والمشاركة المطور إلى فيسبوك
-        // ==========================================
         function copyShare() {
             const refCode = currentUser ? currentUser : "guest";
             const shareUrl = `${window.location.origin}${window.location.pathname}?ref=${refCode}`;
 
-            // النص التسويقي الكامل الجاهز للتعليقات
-            const promotionalText = ` وأخيرا صحراوي أسطورة العالم أنشئ موقع لتوزيع الجوائز على المتابعين 💎🎁\nوفيه أيضا افضل إعدادات الهيدشوت المناسب لهاتفك 🎯\nو زخرفة أسماء أسطورية ومقبولة في اللعبة\nو قسم شحن الجواهر والبويا باص عبر الـ ID عن طريق جمع النقط\n\n👇 ادخل الآن وجرب بنفسك:\n${shareUrl}`;
+            const promotionalText = `🔥 المنصة الأولى لـ Free Fire في المغرب! 🎮💎\n🎯 كاشف حساسية الهيدشوت والـ DPI المناسب لهاتفك بدقة 100%\n🪄 زخرفة أسماء أسطورية ومقبولة في اللعبة\n🎁 قسم شحن الجواهر والبويا باص عبر الـ ID مجاناً!\n\n👇 ادخل الآن وجرب بنفسك:\n${shareUrl}`;
 
             navigator.clipboard.writeText(promotionalText).then(() => {
-                alert("تم نسخ النص ورابطك بنجاح! 📋\nسيتم نقلك الآن إلى فيسبوك للصقه فوراً في التعليقات.");
+                alert("تم نسخ نص المنشور الإعلاني ورابطك بنجاح! 📋\nسيتم نقلك الآن إلى فيسبوك للصقه فوراً في التعليقات.");
                 window.open(FACEBOOK_TARGET_URL, '_blank');
             }).catch(() => {
-                // في حالة متصفحات قديمة لا تدعم clipboard.writeText
                 const shareInput = document.getElementById("shareInput");
                 shareInput.value = promotionalText;
                 shareInput.select();
